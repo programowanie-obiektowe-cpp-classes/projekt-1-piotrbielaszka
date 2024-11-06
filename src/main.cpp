@@ -1,6 +1,6 @@
-#include "PrintHello.hpp"
+#include "Pracownik.hpp"
 
 int main()
 {
-    printHello();
+    Pracownik p{};
 }

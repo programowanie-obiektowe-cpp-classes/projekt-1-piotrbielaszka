@@ -4,5 +4,5 @@
 
 void printHello()
 {
-    std::puts("Hello, World!");
+    std::puts("Test");
 }
