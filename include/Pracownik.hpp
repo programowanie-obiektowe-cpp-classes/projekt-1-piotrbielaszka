@@ -2,11 +2,7 @@
 
 #include "RandomNameGenerator.hpp"
 #include <iostream>
-
-double const CI   = 1;
-double const CMag = 1;
-double const CMkt = 1;
-double const CR   = 1;
+#include <random>
 
 class Pracownik
 {
@@ -15,35 +11,38 @@ protected:
     std::string imie;
 
 public:
+    static int const wynagrodzenie=0;
     Pracownik() { imie = getRandomName(); }
-    static const double wynagrodzenie;
-    virtual void        print() { std::cout << "Pracownik o imieniu: " << imie << ".\n"; }
+    virtual void print() { std::cout << "Pracownik o imieniu: " << imie << ".\n"; }
 };
 
-class Inzynier : Pracownik
+class Inzynier : public Pracownik
 {
     std::string wydzial;
 
 public:
+    static const int CI = 1;
+    static int const wynagrodzenie=4;
     Inzynier()
     {
         imie    = getRandomName();
         wydzial = "MEiL";
     }
-    //  static const double wynagrodzenie = 1000;
     void print() override
     {
         std::cout << "Inzynier o imieniu: " << imie << ". Studiowal na wydziale: " << wydzial << ".\n";
     }
 };
 
-class Magazynier : Pracownik
+class Magazynier : public Pracownik
 {
     bool obsl_widl;
 
 public:
+    static int const wynagrodzenie=3;
+    static const int CMag = 1;
+
     Magazynier() {}
-    //  static const int wynagrodzenie = 1000;
     void print() override
     {
         std::cout << "Magazynier o imieniu: " << imie;
@@ -58,21 +57,38 @@ public:
     }
 };
 
-class Marketer : Pracownik
+class Marketer : public Pracownik
 {
     int follows;
 
 public:
-    // Marketer() { follows = std::uniform_int_distribution<>(0, 1e7); }
-    // static const double wynagrodzenie = 1000;
-    void print() override { std::cout << "Marketr o imieniu: " << imie << ". Ma " << follows << "obserwujacych.\n"; }
+    static int const wynagrodzenie=2;
+    static const int CMkt = 1;
+
+    Marketer()
+    {
+        std::default_random_engine           gen;
+        std::uniform_int_distribution< int > dist(0, 10000000);
+        follows = dist(gen);
+    }
+    void print() override { std::cout << "Marketer o imieniu: " << imie << ". Ma " << follows << " obserwujacych.\n"; }
 };
 
-class Robotnik : Pracownik
+class Robotnik : public Pracownik
 {
     double but;
 
 public:
-    // static const double wynagrodzenie = 1000;
-    void print() override { std::cout << "Robotnik o imieniu: " << imie << ". Jego rozmiar bura to: " << but << ".\n"; }
+    static int const wynagrodzenie=1;
+    static const int CR = 1;
+
+    Robotnik()
+    {
+        std::default_random_engine           gen;
+        std::uniform_int_distribution< int > dist(0, 82);
+        but = dist(gen);
+        but = but / 2;
+    }
+
+    void print() override { std::cout << "Robotnik o imieniu: " << imie << ". Jego rozmiar buta to: " << but << ".\n"; }
 };

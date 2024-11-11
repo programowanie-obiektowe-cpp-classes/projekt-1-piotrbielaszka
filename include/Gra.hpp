@@ -2,15 +2,25 @@
 
 #include "Firma.hpp"
 
-class Gra{
-    bool stan;
+class Gra
+{
+    bool  stan;
     Firma firma;
 
 public:
-    void akcja_gracza(){
-
+    Gra()
+    {
+        stan  = true;
+        firma = Firma();
     }
-    void get_stan(){
+    void akcja_gracza() {}
+    bool get_stan() {return stan;}
 
+    void tick() {
+        if(get_stan()){
+            firma.otrzymaj_przychod();
+            firma.zaplac_wynagrodzenie();
+            firma.splac_raty();
+        }
     }
 };
