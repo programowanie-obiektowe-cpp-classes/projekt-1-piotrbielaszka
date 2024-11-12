@@ -20,9 +20,17 @@ public:
 
     Kredyt(double wysokosc_kredytu, int ilosc_rat) : dlug(wysokosc_kredytu), pozostale_raty(ilosc_rat)
     {
-        if (pozostale_raty > max_raty)
+        if (dlug > 0)
+        {
+            if (pozostale_raty > max_raty)
+                pozostale_raty = 0;
+            dlug += dlug * oprocentowanie_miesiecznie;
+        }
+        else
+        {
+            dlug           = 0;
             pozostale_raty = 0;
-        dlug += dlug * oprocentowanie_miesiecznie;
+        }
     }
     Kredyt()
     {
@@ -31,4 +39,5 @@ public:
     }
 
     double get_dlug() { return dlug; }
+    double oblicz_rate() { return dlug / pozostale_raty; }
 };
