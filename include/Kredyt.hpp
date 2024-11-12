@@ -7,12 +7,14 @@ class Kredyt
 {
     double dlug;
     int    pozostale_raty;
+
+public:
     double splac_rate()
     {
         double rata = dlug / pozostale_raty;
         dlug -= rata;
         pozostale_raty--;
-        dlug=dlug*oprocentowanie_miesiecznie;
+        dlug = dlug * oprocentowanie_miesiecznie;
         return rata;
     }
 
@@ -22,4 +24,11 @@ class Kredyt
             pozostale_raty = 0;
         dlug += dlug * oprocentowanie_miesiecznie;
     }
+    Kredyt()
+    {
+        pozostale_raty = 0;
+        dlug           = 0;
+    }
+
+    double get_dlug() { return dlug; }
 };

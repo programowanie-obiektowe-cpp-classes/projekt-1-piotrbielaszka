@@ -7,7 +7,8 @@
 #include <variant>
 
 #define ilosc_pracownikow_max 1000
-#define stan_konta_poczatek 10
+#define ilosc_kredytow_max 100
+#define stan_konta_poczatek 10000
 #define N 10
 
 using namespace std;
@@ -31,7 +32,9 @@ public:
         iteracja   = 0;
         stan_konta = stan_konta_poczatek;
         prac       = unique_ptr< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(
-            new variant< Inzynier, Magazynier, Marketer, Robotnik >[1000]);
+            new variant< Inzynier, Magazynier, Marketer, Robotnik >[ilosc_pracownikow_max]);
+        // kredyty = unique_ptr< Kredyt[] >(new Kredyt[ilosc_kredytow_max]);
+        kredyty = make_unique< Kredyt[] >(ilosc_kredytow_max);
 
         zatrudnij(Inzynier());
         zatrudnij(Marketer());
@@ -46,7 +49,11 @@ public:
             visit(PrinterPracownikow(), prac[i]);
         }
     }
-    void wez_kredyt(double kwota, int czas_splaty) {}
+    void wez_kredyt(double kwota, int czas_splaty)
+    {
+        kredyty[n_kredytow] = Kredyt(kwota, czas_splaty);
+        n_kredytow++;
+    }
     void zatrudnij(variant< Inzynier, Magazynier, Marketer, Robotnik > p)
     {
         prac[n_prac] = p;
@@ -68,8 +75,12 @@ public:
         stan_konta += historia_przych[iteracja];
     }
 
-    void splac_raty() {
-        
+    void splac_raty()
+    {
+        for (int i = 0; i < n_kredytow; i++)
+        {
+            stan_konta -= kredyty[i].splac_rate();
+        }
     }
 
     double get_stan_konta() { return stan_konta; }
@@ -108,5 +119,15 @@ public:
         {
             return wyprodukowane_produkty * cena;
         }
+    }
+
+    double oblicz_zadluzenie()
+    {
+        double ret = 0;
+        for (int i = 0; i < n_kredytow; i++)
+        {
+            ret += kredyty[i].get_dlug();
+        }
+        return ret;
     }
 };

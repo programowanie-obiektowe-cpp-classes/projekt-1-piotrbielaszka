@@ -21,6 +21,5 @@ int main()
     // f.zatrudnij(Robotnik());
     // f.zaplac_wynagrodzenie();
     // cout<<f.get_stan_konta();
-
-
+    
 }
