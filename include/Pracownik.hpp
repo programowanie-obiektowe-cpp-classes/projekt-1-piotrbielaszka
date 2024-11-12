@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RandomNameGenerator.hpp"
+//#include "RandomWydzialGenerator.hpp"
 #include <iostream>
 #include <random>
 
@@ -30,12 +31,12 @@ public:
     Inzynier()
     {
         imie    = getRandomName();
-        wydzial = "MEiL";
+        wydzial = getRandomWydzial();
     }
     void print() override
     {
         std::cout << "Inzynier o imieniu: " << imie << ". \t Otrzymuje wynagrodzenie wynoszace: " << wynagrodzenie
-                  << ".\t Studiowal na wydziale: " << wydzial << ".\n";
+                  << ".\t Studiowal na wydziale " << wydzial << ".\n";
     }
 };
 
@@ -47,7 +48,14 @@ public:
     static int const wynagrodzenie = 3200;
     static const int CMag          = 1000;
 
-    Magazynier() {}
+    Magazynier()
+    {
+        imie = getRandomName();
+
+        std::default_random_engine           gen;
+        std::uniform_int_distribution< int > dist(0, 1);
+        obsl_widl = dist(gen) == 1;
+    }
     void print() override
     {
         std::cout << "Magazynier o imieniu: " << imie << ". \t Otrzymuje wynagrodzenie wynoszace: " << wynagrodzenie;

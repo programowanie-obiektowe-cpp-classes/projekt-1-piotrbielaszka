@@ -61,6 +61,27 @@ inline constexpr std::array last_names{
     "Nagata"
 };
 
+inline constexpr std::array wydzialy{
+    "WAiNS",
+    "architektury",
+    "budownictwa",
+    "chemicznym",
+    "EiTI",
+    "fizyki",
+    "GiK",
+    "IChiP",
+    "inzynierii ladowej",
+    "inzynierii materialowej",
+    "MiNI",
+    "MEiL",
+    "technologicznym",
+    "mechatroniki",
+    "SiMR",
+    "transportu",
+    "zarzadzania"
+};
+
+
 inline auto getRandomName() -> std::string {
     static auto prng = std::mt19937{std::random_device{}()};
     auto fnd = std::uniform_int_distribution<std::size_t>{0, first_names.size() - 1};
@@ -68,6 +89,14 @@ inline auto getRandomName() -> std::string {
     const auto first_name = first_names[fnd(prng)];
     const auto last_name = last_names[lnd(prng)];
     return std::format("{} {}", first_name, last_name);
+}
+
+
+inline auto getRandomWydzial() -> std::string {
+    static auto generator = std::mt19937{std::random_device{}()};
+    auto dist = std::uniform_int_distribution<std::size_t>{0, wydzialy.size() - 1};
+    const auto wydz = wydzialy[dist(generator)];
+    return wydz;
 }
 
 #endif //P1_CPP_LAB_RANDOMNAMEGENERATOR_HPP
