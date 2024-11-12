@@ -94,7 +94,7 @@ public:
     Robotnik()
     {
         std::default_random_engine           gen;
-        std::uniform_int_distribution< int > dist(0, 82);
+        std::uniform_int_distribution< int > dist(60, 82);
         but = dist(gen);
         but = but / 2;
     }

@@ -9,7 +9,7 @@
 #define ilosc_pracownikow_max 1000
 #define ilosc_kredytow_max 100
 #define ilosc_iteracji_max 1000
-#define stan_konta_poczatek 100000
+#define stan_konta_poczatek 20000
 #define N 10
 
 using namespace std;
@@ -34,7 +34,7 @@ public:
         stan_konta = stan_konta_poczatek;
         prac       = unique_ptr< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(
             new variant< Inzynier, Magazynier, Marketer, Robotnik >[ilosc_pracownikow_max]);
-        // kredyty = unique_ptr< Kredyt[] >(new Kredyt[ilosc_kredytow_max]);
+        prac       = make_unique< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(ilosc_pracownikow_max);
         kredyty         = make_unique< Kredyt[] >(ilosc_kredytow_max);
         historia_przych = unique_ptr< double[] >(new double[ilosc_iteracji_max]);
 
@@ -55,6 +55,14 @@ public:
     {
         kredyty[n_kredytow] = Kredyt(kwota, czas_splaty);
         n_kredytow++;
+        if (kredyty[n_kredytow - 1].get_dlug() <= 0)
+            cout << "Bank nie udzielil kredytu!.\n";
+        else
+        {
+            stan_konta += kwota;
+            cout << "Bank udzielil kretytu. Kwota " << kwota
+                 << " zostala przelana na twoj rachunek, ktorego obecny stan wynosi: " << stan_konta << ".\n";
+        }
     }
     void zatrudnij(variant< Inzynier, Magazynier, Marketer, Robotnik > p)
     {
@@ -104,7 +112,7 @@ public:
         {
             wartosc_firmy += historia_przych[iteracja - i];
         }
-        return wartosc_firmy;
+        return wartosc_firmy / i_max;
     }
 
     double oblicz_przychod()
@@ -165,5 +173,14 @@ public:
         cout << "Pojemnosc magazynu wynosi: " << pojemnosc_magazynu << ".\n";
         cout << popyt << " osob chce kupic ten produkt.\n";
         cout << "Cena jednostkowa produktu wynosi: " << cena << ".\n";
+    }
+
+    void print_raty()
+    {
+        cout << "Lista bierzacych kredytow:\n";
+        for (int i = 0; i < n_kredytow; i++)
+        {
+            kredyty[i].print();
+        }
     }
 };

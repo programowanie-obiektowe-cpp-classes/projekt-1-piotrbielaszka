@@ -3,7 +3,7 @@
 #include "Firma.hpp"
 
 #define M 2
-#define WartoscWygranej 10000000
+#define WartoscWygranej 100000
 
 using namespace std;
 
@@ -46,6 +46,8 @@ public:
         cin >> input;
         if (input == "lp")
             firma.drukuj_pracownikow();
+        else if (input == "lk")
+            firma.print_raty();
         else if (input == "zinz")
             firma.zatrudnij(Inzynier{});
         else if (input == "zmag")
@@ -84,7 +86,8 @@ public:
     void print_instrukcja()
     {
         cout << "Dostepne komendy:\n";
-        cout << "lp - wylistuj pracownikow (imiona i wynagrodzenia)\n";
+        cout << "lp - wylistuj pracownikow\n";
+        cout << "lk - wylistuj kredyty\n";
         cout << "zinz - zatrudnij inz.\n";
         cout << "zmag - zatrudnij mag.\n";
         cout << "zmkt - zatrudnij mark.\n";

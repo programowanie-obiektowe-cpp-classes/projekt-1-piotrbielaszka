@@ -1,7 +1,11 @@
 #pragma once
 
 #define max_raty 20
-#define oprocentowanie_miesiecznie 0.1
+#define oprocentowanie_miesiecznie 0.05
+
+#include <iostream>
+
+using namespace std;
 
 class Kredyt
 {
@@ -11,10 +15,10 @@ class Kredyt
 public:
     double splac_rate()
     {
-        double rata = dlug / pozostale_raty;
+        dlug += dlug * oprocentowanie_miesiecznie;
+        double rata = oblicz_rate();
         dlug -= rata;
         pozostale_raty--;
-        dlug = dlug * oprocentowanie_miesiecznie;
         return rata;
     }
 
@@ -39,5 +43,18 @@ public:
     }
 
     double get_dlug() { return dlug; }
-    double oblicz_rate() { return dlug / pozostale_raty; }
+    double oblicz_rate()
+    {
+        if (pozostale_raty > 0)
+            return dlug / pozostale_raty;
+        return 0;
+    }
+
+    void print()
+    {
+        if (oblicz_rate() > 0)
+        {
+            cout << "Kwota kredytu wynosi: " << dlug << ". Pozostalo " << pozostale_raty << " rat.\n";
+        }
+    }
 };
