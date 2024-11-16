@@ -34,7 +34,7 @@ public:
         stan_konta = stan_konta_poczatek;
         prac       = unique_ptr< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(
             new variant< Inzynier, Magazynier, Marketer, Robotnik >[ilosc_pracownikow_max]);
-        prac       = make_unique< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(ilosc_pracownikow_max);
+        prac            = make_unique< variant< Inzynier, Magazynier, Marketer, Robotnik >[] >(ilosc_pracownikow_max);
         kredyty         = make_unique< Kredyt[] >(ilosc_kredytow_max);
         historia_przych = unique_ptr< double[] >(new double[ilosc_iteracji_max]);
 
@@ -124,13 +124,13 @@ public:
         for (int i = 0; i < n_prac; i++)
         {
             if (holds_alternative< Robotnik >(prac[i]))
-                wyprodukowane_produkty += get< Robotnik >(prac[i]).CR;
+                wyprodukowane_produkty += Robotnik::CR;
             else if (holds_alternative< Magazynier >(prac[i]))
-                pojemnosc_magazynu += get< Magazynier >(prac[i]).CMag;
+                pojemnosc_magazynu += Magazynier::CMag;
             else if (holds_alternative< Marketer >(prac[i]))
-                popyt += get< Marketer >(prac[i]).CMkt;
+                popyt += Marketer::CMkt;
             else if (holds_alternative< Inzynier >(prac[i]))
-                cena += get< Inzynier >(prac[i]).CI;
+                cena += Inzynier::CI;
         }
         if (popyt < wyprodukowane_produkty)
         {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RandomNameGenerator.hpp"
-//#include "RandomWydzialGenerator.hpp"
+// #include "RandomWydzialGenerator.hpp"
 #include <iostream>
 #include <random>
 
@@ -26,8 +26,8 @@ class Inzynier : public Pracownik
     std::string wydzial;
 
 public:
-    static const int CI            = 100;
-    static int const wynagrodzenie = 6000;
+    static constexpr int CI            = 100;
+    static int const     wynagrodzenie = 6000;
     Inzynier()
     {
         imie    = getRandomName();
@@ -45,16 +45,13 @@ class Magazynier : public Pracownik
     bool obsl_widl;
 
 public:
-    static int const wynagrodzenie = 3200;
-    static const int CMag          = 1000;
+    static int const     wynagrodzenie = 3200;
+    static constexpr int CMag          = 1000;
 
     Magazynier()
     {
-        imie = getRandomName();
-
-        std::default_random_engine           gen;
-        std::uniform_int_distribution< int > dist(0, 1);
-        obsl_widl = dist(gen) == 1;
+        imie      = getRandomName();
+        obsl_widl = getRandomObslugaWozka();
     }
     void print() override
     {
@@ -75,14 +72,13 @@ class Marketer : public Pracownik
     int follows;
 
 public:
-    static int const wynagrodzenie = 4000;
-    static const int CMkt          = 200;
+    static int const     wynagrodzenie = 4000;
+    static constexpr int CMkt          = 200;
 
     Marketer()
     {
-        std::default_random_engine           gen;
-        std::uniform_int_distribution< int > dist(0, 10000000);
-        follows = dist(gen);
+        imie    = getRandomName();
+        follows = getRandomFollows();
     }
     void print() override
     {
@@ -96,15 +92,12 @@ class Robotnik : public Pracownik
     double but;
 
 public:
-    static int const wynagrodzenie = 3200;
-    static const int CR            = 40;
+    static int const     wynagrodzenie = 3200;
+    static constexpr int CR            = 40;
 
     Robotnik()
     {
-        std::default_random_engine           gen;
-        std::uniform_int_distribution< int > dist(60, 82);
-        but = dist(gen);
-        but = but / 2;
+        but=getRandomBut();
     }
 
     void print() override
