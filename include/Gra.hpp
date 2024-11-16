@@ -41,7 +41,7 @@ public:
     void akcja_gracza()
     {
         get_stan();
-        cout << "\n Wprowadz komende: ";
+        cout << "\nWprowadz komende: ";
         string input;
         cin >> input;
         if (input == "lp")
@@ -49,13 +49,25 @@ public:
         else if (input == "lk")
             firma.print_raty();
         else if (input == "zinz")
+        {
             firma.zatrudnij(Inzynier{});
+            cout << "Zatrudniono inzyniera\n";
+        }
         else if (input == "zmag")
+        {
             firma.zatrudnij(Magazynier{});
+            cout << "Zatrudniono magazyniera\n";
+        }
         else if (input == "zmkt")
+        {
             firma.zatrudnij(Marketer{});
+            cout << "Zatrudniono marketera\n";
+        }
         else if (input == "zrob")
+        {
             firma.zatrudnij(Robotnik{});
+            cout << "Zatrudniono robotnika\n";
+        }
         else if (input == "kt")
             tick();
         else if (input == "help")
@@ -64,13 +76,17 @@ public:
             firma.print_statystyki();
         else if (input == "kred")
         {
-            cout << "\n Wprowadz kwote kredytu: ";
+            cout << "\nWprowadz kwote kredytu: ";
             double k = 0;
             cin >> k;
-            cout << "\n Wprowadz ilosc rat: ";
+            cout << "\nWprowadz ilosc rat: ";
             int r;
             cin >> r;
             firma.wez_kredyt(k, r);
+        }
+        else
+        {
+            cout << "Niepoprawna komenda!\n";
         }
     }
     bool get_stan()
